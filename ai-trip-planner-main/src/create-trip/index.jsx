@@ -20,7 +20,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { useGoogleLogin } from "@react-oauth/google";
-import { doc, setDoc } from "firebase/firestore";
+import { doc, setDoc,collection, addDoc } from "firebase/firestore";
 import { db } from "@/service/firebaseConfig";
 import { useNavigate } from "react-router-dom";
 
@@ -131,22 +131,27 @@ const CreateTrip = () => {
 
   const SaveAiTrip = async (tripData) => { // Pass the tripData from the AI response
     try {
-      const docRef = doc(db, "AITrips"); // Create a reference to a new document
-      await setDoc(docRef, {
+      // Create a reference to the AITrips collection
+      const tripsCollection = collection(db, "AITrips");
+      
+      // Add a new document to the collection
+      const docRef = await addDoc(tripsCollection, {
         userChoice: {
           ...formData,
           location: formData.location.label, // Store just the label
         },
         tripData, // Use the passed tripData
         userEmail: JSON.parse(localStorage.getItem("user"))?.email, // Ensure user is defined somewhere in your code
-        id: docRef.id,
       });
+      
+      // Optional: You can log the document ID if you want
+      console.log("Document written with ID: ", docRef.id);
       toast.success("Trip saved successfully!"); // Feedback to the user
     } catch (error) {
       console.error("Error saving AI trip: ", error);
       toast.error("Error saving trip. Please try again."); // Error feedback
     }
-  };
+};
   
   
   
