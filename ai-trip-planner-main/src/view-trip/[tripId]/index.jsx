@@ -6,21 +6,34 @@ import { toast } from "sonner";
 import InfoSection from "../components/InfoSection";
 import Hotels from "../components/Hotels";
 import Itinerary from "../components/Itinerary";
+import axios from "axios";
 const ViewTrip = () => {
   const { tripId } = useParams();
   const [trip, setTrip] = useState([]);
   // logic to get trip info from firebase
+  // const GetTripData = async () => {
+  //   const docRef = doc(db, "AITrips", tripId);
+  //   const docSnap = await getDoc(docRef);
+  //   {
+  //     if (docSnap.exists()) {
+  //       console.log("Document : ", docSnap.data());
+  //       setTrip(docSnap.data());
+  //     } else {
+  //       console.log("No such document");
+  //       toast("No trip found");
+  //     }
+  //   }
+  // };
   const GetTripData = async () => {
-    const docRef = doc(db, "AITrips", tripId);
-    const docSnap = await getDoc(docRef);
-    {
-      if (docSnap.exists()) {
-        console.log("Document : ", docSnap.data());
-        setTrip(docSnap.data());
+    try {
+      const response = await axios.get(`http://localhost:5000/api/trips/${tripId}`);
+      if (response.data) {
+        setTrip(response.data);
       } else {
-        console.log("No such document");
         toast("No trip found");
       }
+    } catch (error) {
+      console.error("Error fetching trip: ", error);
     }
   };
   useEffect(() => {

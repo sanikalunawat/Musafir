@@ -129,31 +129,44 @@ const CreateTrip = () => {
       });
   };
 
-  const SaveAiTrip = async (tripData) => { // Pass the tripData from the AI response
-    try {
-      // Create a reference to the AITrips collection
-      const tripsCollection = collection(db, "AITrips");
+//   const SaveAiTrip = async (tripData) => { // Pass the tripData from the AI response
+//     try {
+//       // Create a reference to the AITrips collection
+//       const tripsCollection = collection(db, "AITrips");
       
-      // Add a new document to the collection
-      const docRef = await addDoc(tripsCollection, {
-        userChoice: {
-          ...formData,
-          location: formData.location.label, // Store just the label
-        },
-        tripData, // Use the passed tripData
-        userEmail: JSON.parse(localStorage.getItem("user"))?.email, // Ensure user is defined somewhere in your code
-      });
+//       // Add a new document to the collection
+//       const docRef = await addDoc(tripsCollection, {
+//         userChoice: {
+//           ...formData,
+//           location: formData.location.label, // Store just the label
+//         },
+//         tripData, // Use the passed tripData
+//         userEmail: JSON.parse(localStorage.getItem("user"))?.email, // Ensure user is defined somewhere in your code
+//       });
       
-      // Optional: You can log the document ID if you want
-      console.log("Document written with ID: ", docRef.id);
-      toast.success("Trip saved successfully!"); // Feedback to the user
-    } catch (error) {
-      console.error("Error saving AI trip: ", error);
-      toast.error("Error saving trip. Please try again."); // Error feedback
-    }
+//       // Optional: You can log the document ID if you want
+//       console.log("Document written with ID: ", docRef.id);
+//       toast.success("Trip saved successfully!"); // Feedback to the user
+//     } catch (error) {
+//       console.error("Error saving AI trip: ", error);
+//       toast.error("Error saving trip. Please try again."); // Error feedback
+//     }
+// };
+  
+const SaveAiTrip = async (tripData) => {
+  try {
+    const userEmail = JSON.parse(localStorage.getItem("user"))?.email;
+    const response = await axios.post('http://localhost:5000/api/trips', {
+      userChoice: formData,
+      tripData,
+      userEmail,
+    });
+    toast.success(response.data.message);
+  } catch (error) {
+    console.error("Error saving AI trip: ", error);
+    toast.error("Error saving trip. Please try again.");
+  }
 };
-  
-  
   
 
   return (
