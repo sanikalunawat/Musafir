@@ -28,7 +28,9 @@ app.post("/api/trips", async (req, res) => {
     // Check if tripData is an object
     console.log("Type of tripData:", typeof tripData); // Should log "object"
     console.log("tripData:", tripData);
-    req.body.tripData = JSON.parse(tripData);
+    if(typeof tripData !== "object") {
+      req.body.tripData = JSON.parse(tripData);
+    }
     const newTrip = new Trip(req.body);
    
      await newTrip.save();
