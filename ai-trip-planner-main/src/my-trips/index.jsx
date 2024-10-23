@@ -42,7 +42,7 @@ const MyTrips = () => {
     
   }, []);
   return (
-    <div className="p-10 md: px-20 lg:px-36">
+    <div className="p-10 md: px-20 lg:px-36 bg-gradient-to-b from-blue-100 to-gray-100 min-h-screen">
       <h2 className="font-bold text-4xl text-center">My Trips</h2>
       <div className="grid grid-cols-2 mt-10 md:grid-cols-3 gap-5">
         {userTrips.map((trip, index) => (
