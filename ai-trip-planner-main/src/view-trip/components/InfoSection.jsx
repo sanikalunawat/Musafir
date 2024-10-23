@@ -1,29 +1,43 @@
-import { GetPlaceDetails } from "@/service/GlobalApi";
 import React, { useEffect, useState } from "react";
+import { GetPlaceDetails } from "@/service/GlobalApi";
 
-const PHOTO_REF_URL =
-  "https://places.googleapis.com/v1/{NAME}/media?maxHeightPx=600&maxWidthPx=600&key=" +
-  import.meta.env.VITE_GOOGLE_PLACE_API_KEY;
+const FALLBACK_IMAGE_URL = "../../src/assets/fallback.jpg"; // Ensure this path is correct
+const PHOTO_REF_URL = "https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/{longitude},{latitude},14.25,0/600x600?access_token=" +
+  import.meta.env.VITE_MAPBOX_API_KEY;
+
+
 const InfoSection = ({ trip }) => {
-  const [photoUrl, setPhotoUrl] = useState();
+  const [photoUrl, setPhotoUrl] = useState(FALLBACK_IMAGE_URL); // Start with the fallback image
+
   useEffect(() => {
-    trip && GetPlacePhoto();
-  }, [trip]);
+    const GetPlacePhoto = async () => {
+      try {
+        const data = {
+          placeName: trip?.userChoice?.location?.label,
+        };
+        const result = await GetPlaceDetails(data.placeName);
+        const place = result.data.features[0];
 
-  const GetPlacePhoto = async () => {
-    const data = {
-      textQuery: trip?.userChoice?.location?.label,
+        if (place) {
+          const [longitude, latitude] = place.center;
+          const url = PHOTO_REF_URL.replace("{longitude}", longitude)
+                                   .replace("{latitude}", latitude);
+          setPhotoUrl(url);
+        } else {
+          console.warn("Place not found.");
+          setPhotoUrl(FALLBACK_IMAGE_URL);
+        }
+      } catch (error) {
+        console.error("Error fetching place details:", error);
+        setPhotoUrl(FALLBACK_IMAGE_URL);
+      }
     };
-    const result = await GetPlaceDetails(data).then((resp) => {
-      console.log(resp.data.places[0].photos[3].name);
 
-      const PhotoUrl = PHOTO_REF_URL.replace(
-        "{NAME}",
-        resp.data.places[0].photos[3].name
-      );
-      setPhotoUrl(PhotoUrl);
-    });
-  };
+    if (trip?.userChoice?.location?.label) {
+      GetPlacePhoto();
+    }
+  }, [trip?.userChoice?.location?.label]);
+
   return (
     <div className="flex justify-between items-center mt-12 md:mx-16 lg:mx-48 p-6 rounded-lg shadow-lg">
       <img

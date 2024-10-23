@@ -5,7 +5,7 @@ const cors = require("cors");
 const app = express();
 app.use(cors());
 app.use(express.json());
-
+console.log("Hello World");
 // Connect to MongoDB
 mongoose.connect('mongodb+srv://travel_user:yourSecurePassword123@travelplannerdb.ad9pf.mongodb.net/?retryWrites=true&w=majority&appName=TravelPlannerDB', { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('Connected to MongoDB'))
@@ -14,7 +14,7 @@ mongoose.connect('mongodb+srv://travel_user:yourSecurePassword123@travelplannerd
 
 const tripSchema = new mongoose.Schema({
   userChoice: Object,
-  tripData: String,
+  tripData: Object,
   userEmail: String,
 });
 
@@ -24,6 +24,7 @@ const Trip = mongoose.model("Trip", tripSchema);
 app.post("/api/trips", async (req, res) => {
   try {
     const newTrip = new Trip(req.body);
+    console.log(req.body);
     await newTrip.save();
     res.status(201).json({ message: "Trip saved successfully!" });
   } catch (error) {
@@ -42,8 +43,10 @@ app.get("/api/trips/:email", async (req, res) => {
 });
 
 // Fetch a specific trip
-app.get("/api/trips/:id", async (req, res) => {
+app.get("/api/trips1/:id", async (req, res) => {
+  console.log(req.params.id);
   try {
+    console.log(req.params.id);
     const trip = await Trip.findById(req.params.id);
     if (trip) {
       res.status(200).json(trip);

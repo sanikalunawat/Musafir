@@ -58,5 +58,6 @@ export const AI_PROMPT = `
   Output in JSON format.
 `;
 export const PHOTO_REF_URL =
-  "https://places.googleapis.com/v1/{NAME}/media?maxHeightPx=600&maxWidthPx=600&key=" +
-  import.meta.env.VITE_GOOGLE_PLACE_API_KEY;
+  "https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/{longitude},{latitude},14.25,0/600x600?access_token=" +
+  import.meta.env.VITE_MAPBOX_API_KEY;
+

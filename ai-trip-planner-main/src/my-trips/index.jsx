@@ -32,18 +32,21 @@ const MyTrips = () => {
     try {
       const response = await axios.get(`http://localhost:5000/api/trips/${user.email}`);
       setUserTrips(response.data); // Store trips in state
+      console.log(response.data);
     } catch (error) {
       console.error("Error fetching trips: ", error);
     }
   };
   useEffect(() => {
     GetUserTrips();
+    
   }, []);
   return (
     <div className="p-10 md: px-20 lg:px-36">
       <h2 className="font-bold text-4xl text-center">My Trips</h2>
       <div className="grid grid-cols-2 mt-10 md:grid-cols-3 gap-5">
         {userTrips.map((trip, index) => (
+          
           <UserTripCardItem trip={trip} key={index} />
         ))}
       </div>

@@ -25,10 +25,13 @@ const ViewTrip = () => {
   //   }
   // };
   const GetTripData = async () => {
+    // console.log(tripId);
     try {
-      const response = await axios.get(`http://localhost:5000/api/trips/${tripId}`);
+      const response = await axios.get(`http://localhost:5000/api/trips1/${tripId}`);
+      // console.log(response)
       if (response.data) {
         setTrip(response.data);
+        // console.log(response.data);
       } else {
         toast("No trip found");
       }
@@ -38,7 +41,8 @@ const ViewTrip = () => {
   };
   useEffect(() => {
     GetTripData();
-  }, [tripId]);
+    console.log(trip);
+  }, []);
 
   return (
     <div className="w-full min-h-screen">

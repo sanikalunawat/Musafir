@@ -1,31 +1,47 @@
-import React from "react";
-import ItineraryCard from "./ItineraryCard";
-import { gsap } from "gsap";
-import ScrollTrigger from "gsap/ScrollTrigger";
+import React, { useEffect, useState } from "react";
+import { GetPlaceDetails } from "@/service/GlobalApi";
+import { Link } from "react-router-dom";
+import { PHOTO_REF_URL } from "@/constants/options";
 
-gsap.registerPlugin(ScrollTrigger);
+const ItineraryCard = ({ plan }) => {
+  const [photoUrl, setPhotoUrl] = useState("");
+  const [latitude, setLatitude] = useState();
+  const [longitude, setLongitude] = useState();
 
-const Itinerary = ({ trip }) => {
+  useEffect(() => {
+    if (plan) {
+      fetchPlacePhoto();
+    }
+  }, [plan]);
+
+  const fetchPlacePhoto = async () => {
+    const result = await GetPlaceDetails(plan?.placeName);
+    const place = result.data.features[0];
+    if (place) {
+      const [long, lat] = place.center;
+      setLongitude(long);
+      setLatitude(lat);
+      const url = PHOTO_REF_URL.replace("{longitude}", long)
+                               .replace("{latitude}", lat);
+      setPhotoUrl(url);
+    }
+  };
+
   return (
-    <div className="container mx-auto px-6 py-12 w-4/5">
-      <h2 className="text-4xl font-bold text-center mb-8">Places to Visit</h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-        {trip?.tripData?.itinerary.map((item, i) => (
-          <div
-            key={i}
-            className="itinerary-card p-4 bg-white rounded-lg shadow-lg"
-          >
-            <h3 className="text-2xl font-semibold mb-4">{item?.day}</h3>
-            <div className="space-y-6">
-              {item?.plan?.map((plan, index) => (
-                <ItineraryCard plan={plan} key={index} />
-              ))}
-            </div>
-          </div>
-        ))}
+    <Link to={`https://www.openstreetmap.org/?mlat=${latitude}&mlon=${longitude}&zoom=14`} target="_blank">
+      <div className="flex flex-col bg-white rounded-lg shadow-md overflow-hidden transition-transform transform hover:scale-105 duration-300 itinerary-card">
+        <img
+          className="object-cover w-full h-48"
+          src={photoUrl || "../../src/assets/fallback.jpg"}
+          alt={plan?.placeName}
+        />
+        <div className="p-4">
+          <h3 className="text-xl font-bold">{plan?.placeName}</h3>
+          <p className="text-gray-600">{plan?.description}</p>
+        </div>
       </div>
-    </div>
+    </Link>
   );
 };
 
-export default Itinerary;
+export default ItineraryCard;

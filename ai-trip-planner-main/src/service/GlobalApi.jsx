@@ -21,14 +21,14 @@
 // };
 
 import axios from "axios";
-const BASE_URL = "https://places.googleapis.com/v1/places:searchText";
+const BASE_URL = "https://api.mapbox.com/geocoding/v5/mapbox.places";
 
-const config = {
-  headers: {
-    "Content-Type": "application/json",
-    "X-Goog-Api-Key": import.meta.env.VITE_GOOGLE_PLACE_API_KEY,
-    "X-Goog-FieldMask": ["places.photos", "places.displayName", "places.id"],
-  },
+export const GetPlaceDetails = (placeName) => {
+  return axios.get(`${BASE_URL}/${encodeURIComponent(placeName)}.json`, {
+    params: {
+      access_token: import.meta.env.VITE_MAPBOX_API_KEY,
+      limit: 1,
+    },
+  });
 };
 
-export const GetPlaceDetails = (data) => axios.post(BASE_URL, data, config);

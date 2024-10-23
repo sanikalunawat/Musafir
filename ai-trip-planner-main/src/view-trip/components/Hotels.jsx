@@ -5,6 +5,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { FaAngleRight } from "react-icons/fa6";
 const Hotels = ({ trip }) => {
+  console.log(trip);
   const settings = {
     infinite: true,
     speed: 500,

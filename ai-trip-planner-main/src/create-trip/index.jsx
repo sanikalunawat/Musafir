@@ -155,10 +155,13 @@ const CreateTrip = () => {
   
 const SaveAiTrip = async (tripData) => {
   try {
+    const td = JSON.parse(tripData);
+    // console.log(tripData)
+    // console.log(td)
     const userEmail = JSON.parse(localStorage.getItem("user"))?.email;
     const response = await axios.post('http://localhost:5000/api/trips', {
       userChoice: formData,
-      tripData,
+      tripData: td,
       userEmail,
     });
     toast.success(response.data.message);
