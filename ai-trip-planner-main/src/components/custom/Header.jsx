@@ -58,6 +58,11 @@ const Header = () => {
               My Trips
             </Button>
           </a>
+          <a href = "/create-trip">
+            <Button variant="outline" className="rounded-full">
+              Create Trip
+            </Button>
+          </a>
           <Popover>
             <PopoverTrigger>
               <img className="h-10 w-10 rounded-full" src={user?.picture} />

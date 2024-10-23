@@ -1,47 +1,49 @@
 import React, { useEffect, useState } from "react";
-import { GetPlaceDetails } from "@/service/GlobalApi";
 import { Link } from "react-router-dom";
-import { PHOTO_REF_URL } from "@/constants/options";
+import ItineraryCard from "./ItineraryCard"; // Import ItineraryCard component
+import axios from "axios"; // For making API calls
 
-const ItineraryCard = ({ plan }) => {
-  const [photoUrl, setPhotoUrl] = useState("");
-  const [latitude, setLatitude] = useState();
-  const [longitude, setLongitude] = useState();
+const Itinerary = () => {
+  const [itinerary, setItinerary] = useState([]); // Store fetched itinerary data
+  const [loading, setLoading] = useState(true);   // Handle loading state
+  const [error, setError] = useState(null);       // Track error state
 
   useEffect(() => {
-    if (plan) {
-      fetchPlacePhoto();
-    }
-  }, [plan]);
+    fetchItineraryData(); // Fetch itinerary on component mount
+  }, []);
 
-  const fetchPlacePhoto = async () => {
-    const result = await GetPlaceDetails(plan?.placeName);
-    const place = result.data.features[0];
-    if (place) {
-      const [long, lat] = place.center;
-      setLongitude(long);
-      setLatitude(lat);
-      const url = PHOTO_REF_URL.replace("{longitude}", long)
-                               .replace("{latitude}", lat);
-      setPhotoUrl(url);
+  // Function to fetch itinerary data from API
+  const fetchItineraryData = async () => {
+    try {
+      const response = await axios.get("/api/itinerary"); // Adjust the API endpoint
+      setItinerary(response.data); // Store fetched data in state
+      setLoading(false); // Set loading to false
+    } catch (err) {
+      console.error("Error fetching itinerary:", err);
+      setError("Failed to load itinerary"); // Set error message
+      setLoading(false);
     }
   };
 
+  // Handle loading and error states
+  if (loading) return <div>Loading itinerary...</div>;
+  if (error) return <div>{error}</div>;
+
   return (
-    <Link to={`https://www.openstreetmap.org/?mlat=${latitude}&mlon=${longitude}&zoom=14`} target="_blank">
-      <div className="flex flex-col bg-white rounded-lg shadow-md overflow-hidden transition-transform transform hover:scale-105 duration-300 itinerary-card">
-        <img
-          className="object-cover w-full h-48"
-          src={photoUrl || "../../src/assets/fallback.jpg"}
-          alt={plan?.placeName}
-        />
-        <div className="p-4">
-          <h3 className="text-xl font-bold">{plan?.placeName}</h3>
-          <p className="text-gray-600">{plan?.description}</p>
+    <div className="mt-12 mx-auto md:mx-16 lg:mx-32 p-6 rounded-lg shadow-lg">
+      <h1 className="text-4xl font-bold text-center mb-8">Trip Itinerary</h1>
+      {itinerary.map((dayPlan, i) => (
+        <div key={i} className="mb-6">
+          <h2 className="text-2xl font-bold mb-4">{dayPlan.day}</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {dayPlan.plan.map((place, index) => (
+              <ItineraryCard key={index} plan={place} />
+            ))}
+          </div>
         </div>
-      </div>
-    </Link>
+      ))}
+    </div>
   );
 };
 
-export default ItineraryCard;
+export default Itinerary;
