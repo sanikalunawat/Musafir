@@ -62,7 +62,7 @@ const Hero = () => {
       {/* Parallax Background Image */}
       <Parallax className="absolute top-0 left-0 w-full h-full" y={[-50, 50]}>
         <img
-          src="/bg.jpg"
+          src="../../src/assets/fallback.jpg"
           alt="Background"
           className="w-full h-full object-cover"
         />
