@@ -33,7 +33,7 @@ const Hotels = ({ trip }) => {
   };
 
   return (
-    <div className="mt-12 mx-auto md:mx-16 lg:mx-32 p-6 rounded-lg shadow-lg">
+    <div className="mt-12 mx-auto bg-gradient-to-b from-blue-100 to-gray-100 md:mx-16 lg:mx-32 p-6 rounded-lg shadow-lg">
       <div className="text-4xl font-bold text-center mb-8">
         Hotel Recommendations
       </div>

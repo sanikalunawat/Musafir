@@ -39,7 +39,8 @@ const InfoSection = ({ trip }) => {
   }, [trip?.userChoice?.location?.label]);
 
   return (
-    <div className="flex justify-between items-center mt-12 md:mx-16 lg:mx-48 p-6 rounded-lg shadow-lg">
+    <div className="flex bg-gradient-to-b from-blue-100 to-gray-100 justify-between items-center mt-12 mx-auto md:mx-16 lg:mx-32 p-6 rounded-lg shadow-lg">
+
       <img
         className="h-40 w-40 rounded-full object-cover"
         src={photoUrl}
