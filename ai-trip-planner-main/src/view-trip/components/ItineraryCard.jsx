@@ -23,6 +23,7 @@ const ItineraryCard = ({ plan }) => {
             </span>
           <span className="ml-2">{plan?.ticketPricing}</span>
           </div>
+          <p><strong>Location:</strong> {plan.geoCoordinates}</p>
           {/* <span className="flex items-center">
               {plan?.rating}
               <CiStar />
