@@ -55,7 +55,7 @@ export const AI_PROMPT = `
   Traveler type: {traveler}, with a {budget} budget. 
   Provide a list of hotel options including the name, address, and the most recent image URL (ensure the URL is working), geo coordinates, rating, and descriptions. 
   Suggest a daily itinerary with place names, details, image URLs, geo coordinates, ticket pricing, ratings, and travel time for each location for {totalDays} days, including the best time to visit. 
-  Output in JSON format.
+  Output in JSON format DO NOT ADD ANY EXTRA FORMATTING MAKEIT PARSEABLE AS A JSON OBJECT.
 `;
 export const PHOTO_REF_URL =
   "https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/{longitude},{latitude},14.25,0/600x600?access_token=" +

@@ -23,8 +23,16 @@ const Trip = mongoose.model("Trip", tripSchema);
 // Save trip
 app.post("/api/trips", async (req, res) => {
   try {
+    const { tripData } = req.body;
+
+    // Check if tripData is an object
+    console.log("Type of tripData:", typeof tripData); // Should log "object"
+    console.log("tripData:", tripData);
+    req.body.tripData = JSON.parse(tripData);
     const newTrip = new Trip(req.body);
-    console.log(req.body);
+   
+     await newTrip.save();
+    
     await newTrip.save();
     res.status(201).json({ message: "Trip saved successfully!" });
   } catch (error) {

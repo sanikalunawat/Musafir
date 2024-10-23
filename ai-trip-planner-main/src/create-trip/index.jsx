@@ -155,22 +155,32 @@ const CreateTrip = () => {
   
 const SaveAiTrip = async (tripData) => {
   try {
+    // Try to parse the tripData into JSON
     const td = JSON.parse(tripData);
-    // console.log(tripData)
-    // console.log(td)
+
+    // Ensure that the parsed data is a valid object
+    if (typeof td !== 'object' || td === null) {
+      throw new Error("Invalid trip data format");
+    }
+
+    // Retrieve the user email from localStorage
     const userEmail = JSON.parse(localStorage.getItem("user"))?.email;
+
+    // Send the data to the backend using axios
     const response = await axios.post('http://localhost:5000/api/trips', {
-      userChoice: formData,
-      tripData: td,
-      userEmail,
+      userChoice: formData, // This is the form data the user filled in
+      tripData: td,         // The parsed trip data from the AI model
+      userEmail,            // User's email from local storage
     });
+
+    // Show success message to the user
     toast.success(response.data.message);
+
   } catch (error) {
     console.error("Error saving AI trip: ", error);
     toast.error("Error saving trip. Please try again.");
   }
 };
-  
 
   return (
     <div className="flex flex-col justify-center items-center bg-gradient-to-b from-blue-100 to-gray-100 min-h-screen py-8 px-4">
