@@ -18,15 +18,14 @@ const HotelCardItem = ({ h }) => {
     try {
       const result = await GetPlaceDetails(h?.name);
       const place = result.data.features[0];
-      // console.log(place)
-      // if (place) {
-      //   const [longitude, latitude] = place.center;
-      //   const url = PHOTO_REF_URL.replace("{longitude}", longitude)
-      //                            .replace("{latitude}", latitude);
-        
-        setPhotoUrl(h.imageUrl);
+      console.log(place)
+      if (place) {
+        const [longitude, latitude] = place.center;
+        const url = PHOTO_REF_URL.replace("{longitude}", longitude)
+                                 .replace("{latitude}", latitude);
+        setPhotoUrl(url);
       }
-    catch (error) {
+    } catch (error) {
       console.error("Error fetching hotel photo:", error);
       setPhotoUrl("../../src/assets/fallback.jpg");
     }
