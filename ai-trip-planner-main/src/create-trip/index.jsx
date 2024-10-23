@@ -25,16 +25,39 @@ import { db } from "@/service/firebaseConfig";
 import { useNavigate } from "react-router-dom";
 
 const staticLocations = [
-  { label: "New York, USA", value: "New York, USA" },
-  { label: "Paris, France", value: "Paris, France" },
-  { label: "Tokyo, Japan", value: "Tokyo, Japan" },
-  { label: "Sydney, Australia", value: "Sydney, Australia" },
-  { label: "Cape Town, South Africa", value: "Cape Town, South Africa" },
-  { label: "Rio de Janeiro, Brazil", value: "Rio de Janeiro, Brazil" },
-  { label: "Toronto, Canada", value: "Toronto, Canada" },
-  { label: "London, UK", value: "London, UK" },
-  { label: "Berlin, Germany", value: "Berlin, Germany" },
-  { label: "Dubai, UAE", value: "Dubai, UAE" },
+  
+    { label: "New York, USA", value: "New York, USA" },
+    { label: "Paris, France", value: "Paris, France" },
+    { label: "Tokyo, Japan", value: "Tokyo, Japan" },
+    { label: "Sydney, Australia", value: "Sydney, Australia" },
+    { label: "Cape Town, South Africa", value: "Cape Town, South Africa" },
+    { label: "Rio de Janeiro, Brazil", value: "Rio de Janeiro, Brazil" },
+    { label: "Toronto, Canada", value: "Toronto, Canada" },
+    { label: "London, UK", value: "London, UK" },
+    { label: "Berlin, Germany", value: "Berlin, Germany" },
+    { label: "Dubai, UAE", value: "Dubai, UAE" },
+    { label: "Barcelona, Spain", value: "Barcelona, Spain" },
+    { label: "Moscow, Russia", value: "Moscow, Russia" },
+    { label: "Bangkok, Thailand", value: "Bangkok, Thailand" },
+    { label: "Los Angeles, USA", value: "Los Angeles, USA" },
+    { label: "Mexico City, Mexico", value: "Mexico City, Mexico" },
+    { label: "Mumbai, India", value: "Mumbai, India" },
+    { label: "Istanbul, Turkey", value: "Istanbul, Turkey" },
+    { label: "Seoul, South Korea", value: "Seoul, South Korea" },
+    { label: "Buenos Aires, Argentina", value: "Buenos Aires, Argentina" },
+    { label: "Singapore", value: "Singapore" },
+    { label: "Lisbon, Portugal", value: "Lisbon, Portugal" },
+    { label: "Cairo, Egypt", value: "Cairo, Egypt" },
+    { label: "Amsterdam, Netherlands", value: "Amsterdam, Netherlands" },
+    { label: "Hanoi, Vietnam", value: "Hanoi, Vietnam" },
+    { label: "Stockholm, Sweden", value: "Stockholm, Sweden" },
+    { label: "Dublin, Ireland", value: "Dublin, Ireland" },
+    { label: "Athens, Greece", value: "Athens, Greece" },
+    { label: "Nairobi, Kenya", value: "Nairobi, Kenya" },
+    { label: "Budapest, Hungary", value: "Budapest, Hungary" },
+    { label: "Vienna, Austria", value: "Vienna, Austria" }
+  
+  
 ];
 
 const CreateTrip = () => {
