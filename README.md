@@ -1,4 +1,6 @@
-This repository contains the code for an AI-driven travel itinerary planner, which generates customized trips with hotel recommendations and itineraries based on user budgets and travel preferences. 
+# AI Trip Advisor
+
+This repository contains the code for an , which generates customized trips with hotel recommendations and itineraries based on user budgets and travel preferences. 
 
 ## Features
 
@@ -12,7 +14,7 @@ To run this project on your machine, follow these steps:
 
 1. **Clone the repository**:
     ```bash
-    git clone this repository
+    git clone https://github.com/sanikalunawat/Musafir.git
     cd Musafir
     ```
 
