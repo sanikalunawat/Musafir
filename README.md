@@ -1,4 +1,4 @@
-# AI Trip Advisor
+
 
 This repository contains the code for an , which generates customized trips with hotel recommendations and itineraries based on user budgets and travel preferences. 
 
